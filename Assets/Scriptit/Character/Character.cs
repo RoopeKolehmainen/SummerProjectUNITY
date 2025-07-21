@@ -1,5 +1,7 @@
 using System;
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Character : MonoBehaviour
 {
@@ -8,13 +10,23 @@ public class Character : MonoBehaviour
     private int damage;
     public static Action<int> healthChanged;
     public int TurnNumber;
-    public int teamID;
+    private int teamID;
+    public int TeamID => teamID;
     private void Start()
     {
         Reset_game();
-        CharacterManager.Instance.StartCoroutine("AssignTeam",gameObject);
-        teamID = CharacterManager.Instance.AssignNumber(CharacterStats.CharacterTeam.ToString());
-        //TODO add IEnumerator
+        StartCoroutine(nameof(setTeam));
+        
+      
+    }
+    public IEnumerator setTeam()
+    {
+        if(CharacterManager.Instance == null)
+        {
+            yield return null;
+        }
+        CharacterManager.Instance.StartCoroutine("AssignTeam", gameObject);
+        yield break;
     }
     public void Reset_game()
     {
@@ -30,5 +42,9 @@ public class Character : MonoBehaviour
             CharacterManager.Instance.RemoveFromTeam(gameObject);
             Destroy(gameObject);
         }
+    }
+    public void AssignID(int ID)
+    {
+        teamID = ID;
     }
 }

@@ -28,9 +28,13 @@ public class CharacterManager : MonoBehaviour
         if (ID.GetComponent<Character>().CharacterStats.CharacterTeam.ToString() == "player")
         {
             playerTeam.Add(ID);
+            ID.GetComponent<Character>().AssignID(AssignPlayerNumber);
+            AssignPlayerNumber += 1;
             yield break;
         }
         enemyTeam.Add(ID);
+        ID.GetComponent<Character>().AssignID(AssignEnemyNumber);
+        AssignEnemyNumber += 1;
         yield break;
 
     }
@@ -47,15 +51,5 @@ public class CharacterManager : MonoBehaviour
     {
         AssignPlayerNumber = 1;
         AssignEnemyNumber = 1;
-    }
-    public int AssignNumber(string team)
-    {
-        if(team == "player")
-        {
-            AssignPlayerNumber += 1;
-            return AssignPlayerNumber - 1;
-        }
-        AssignEnemyNumber += 1;
-        return AssignEnemyNumber - 1;
     }
 }
