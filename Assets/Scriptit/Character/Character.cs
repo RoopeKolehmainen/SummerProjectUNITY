@@ -8,10 +8,9 @@ public class Character : MonoBehaviour
     [SerializeField] public CharacterData CharacterStats;
     private int health;
     private int damage;
+    public int Damage => damage;
     public static Action<int> healthChanged;
-    public int TurnNumber;
-    private int teamID;
-    public int TeamID => teamID;
+
     private void Start()
     {
         Reset_game();
@@ -43,8 +42,5 @@ public class Character : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void AssignID(int ID)
-    {
-        teamID = ID;
-    }
+
 }

@@ -8,10 +8,13 @@ using UnityEngine.SceneManagement;
 public class CharacterManager : MonoBehaviour
 {
     private List<GameObject> playerTeam = new List<GameObject>();
+    public List<GameObject> PlayerTeam => playerTeam;
     private List<GameObject> enemyTeam = new List<GameObject>();
+    public List<GameObject> EnemyTeam => enemyTeam;
     public static CharacterManager Instance { get; private set; }
-    private int AssignPlayerNumber = 1;
-    private int AssignEnemyNumber = 1;
+    private int AssignPlayerNumber;
+    private int AssignEnemyNumber;
+
     void Start()
     {
         Instance = this;
@@ -28,12 +31,10 @@ public class CharacterManager : MonoBehaviour
         if (ID.GetComponent<Character>().CharacterStats.CharacterTeam.ToString() == "player")
         {
             playerTeam.Add(ID);
-            ID.GetComponent<Character>().AssignID(AssignPlayerNumber);
             AssignPlayerNumber += 1;
             yield break;
         }
         enemyTeam.Add(ID);
-        ID.GetComponent<Character>().AssignID(AssignEnemyNumber);
         AssignEnemyNumber += 1;
         yield break;
 
@@ -43,13 +44,14 @@ public class CharacterManager : MonoBehaviour
         if (ID.GetComponent<Character>().CharacterStats.CharacterTeam.ToString() == "player")
         {
             playerTeam.Remove(ID);
+
             return;
         }
         enemyTeam.Remove(ID);
     }
     void OnSceneLoad(Scene scene, LoadSceneMode mode)
     {
-        AssignPlayerNumber = 1;
-        AssignEnemyNumber = 1;
+        AssignPlayerNumber = 0;
+        AssignEnemyNumber = 0;
     }
 }
